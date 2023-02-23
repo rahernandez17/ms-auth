@@ -1,0 +1,54 @@
+jwt:
+  access-token:
+    secret: 4A614E645266556A586E3272357538782F413F4428472B4B6250655368566B59
+    validity-seconds: 3600
+  header: Authorization
+  prefix: Bearer
+
+
+server:
+  port: 9000
+
+spring: # Flyway settings
+  flyway:
+    schemas: authentication
+    locations: classpath:db/migration
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    baseline-version: 0
+    baseline-on-migrate: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/prueba?currentSchema=authentication
+    username: prueba
+    password: admin
+    driverClassName: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        ddl-auto: none # Hibernate ddl auto (none, validate, create, create-drop, update)
+        dialect: org.hibernate.dialect.PostgresPlusDialect
+
+    show-sql: false # Show or not log for each sql query
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher # Compatible with Swagger spring fox 3
+
+
+logging:
+  level:
+    ROOT: INFO
+    org.zalando.logbook: TRACE
+logbook:
+  filter:
+    enabled: true
+  exclude: /actuator/**, /swagger-ui**, /api-docs**
+  format:
+    style: json
+  secure-filter:
+    enabled: true
