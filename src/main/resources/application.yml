@@ -45,10 +45,12 @@ logging:
     ROOT: INFO
     org.zalando.logbook: TRACE
 logbook:
-  filter:
-    enabled: true
-  exclude: /actuator/**, /swagger-ui**, /api-docs**
-  format:
-    style: json
-  secure-filter:
-    enabled: true
+  filter.enabled: true
+  exclude: /actuator/**, /swagger-ui**, /api-docs**, /v3/api-docs/**, /swagger-resources/**
+  format.style: splunk
+  secure-filter.enabled: true
+  obfuscate:
+    headers:
+    parameters:
+      - password
+      - token
