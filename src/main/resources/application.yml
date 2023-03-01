@@ -51,6 +51,4 @@ logbook:
   secure-filter.enabled: true
   obfuscate:
     headers:
-    parameters:
-      - password
-      - token
+      -
