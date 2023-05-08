@@ -3,7 +3,6 @@ package com.example.auth.security.services;
 import com.example.auth.models.Usuario;
 import com.example.auth.repositories.UsuarioRepository;
 import com.example.auth.security.models.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +13,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
 
-    @Autowired
     public UserDetailServiceImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }

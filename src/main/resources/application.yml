@@ -37,7 +37,7 @@ spring: # Flyway settings
 
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher # Compatible with Swagger spring fox 3
+      matching-strategy: ANT_PATH_MATCHER # Compatible with Swagger spring fox 3
 
 
 logging:

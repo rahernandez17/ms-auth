@@ -6,7 +6,6 @@ import com.example.auth.models.Usuario;
 import com.example.auth.repositories.UsuarioRepository;
 import com.example.auth.responses.UsuarioResponse;
 import com.example.auth.security.components.TokenUtilComponent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +26,10 @@ public class UsuarioService {
 
     private final UsuarioMapper usuarioMapper;
 
-    @Autowired
     public UsuarioService(
             UsuarioRepository usuarioRepository,
             TokenUtilComponent tokenUtilComponent,
-            UsuarioMapper usuarioMapper
-    ) {
+            UsuarioMapper usuarioMapper) {
         this.usuarioRepository = usuarioRepository;
         this.tokenUtilComponent = tokenUtilComponent;
         this.usuarioMapper = usuarioMapper;

@@ -1,7 +1,6 @@
 package com.example.auth.configurations;
 
 import com.example.auth.AuthApplication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +20,7 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-@Profile({"!prod"})
+@Profile({ "!prod" })
 public class SwaggerConfig {
 
     @Value("${jwt.header}")
@@ -29,7 +28,6 @@ public class SwaggerConfig {
 
     private final BuildProperties buildProperties;
 
-    @Autowired
     public SwaggerConfig(BuildProperties buildProperties) {
         this.buildProperties = buildProperties;
     }
@@ -39,15 +37,15 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(AuthApplication.class.getPackage().getName() + ".controllers"))
+                .apis(RequestHandlerSelectors
+                        .basePackage(AuthApplication.class.getPackage().getName() + ".controllers"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .securityContexts(Collections.singletonList(securityContext()))
                 .apiInfo(apiInfo()).tags(
                         new Tag("Authentication API", "Operations for Authentication"),
-                        new Tag("Users API", "Read operations for Users")
-                );
+                        new Tag("Users API", "Read operations for Users"));
     }
 
     private ApiInfo apiInfo() {
@@ -55,7 +53,8 @@ public class SwaggerConfig {
                 .description("API reference for developers")
                 .termsOfServiceUrl("http://smartcampus.uniajc.edu.co/")
                 .license("MIT License")
-                .contact(new Contact("Smart Campus UNIAJC", "http://smartcampus.uniajc.edu.co/", "smartcampus@gmail.com"))
+                .contact(new Contact("Smart Campus UNIAJC", "http://smartcampus.uniajc.edu.co/",
+                        "smartcampus@gmail.com"))
                 .version(buildProperties.getVersion())
                 .build();
     }
@@ -70,7 +69,7 @@ public class SwaggerConfig {
 
     public List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = {authorizationScope};
+        AuthorizationScope[] authorizationScopes = { authorizationScope };
         return Collections.singletonList(new SecurityReference(jwtHeader, authorizationScopes));
     }
 

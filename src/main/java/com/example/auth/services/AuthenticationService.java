@@ -9,7 +9,6 @@ import com.example.auth.requests.RegisterUserRequest;
 import com.example.auth.responses.AuthenticationResponse;
 import com.example.auth.responses.RefreshTokenResponse;
 import com.example.auth.security.components.TokenUtilComponent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,14 +39,12 @@ public class AuthenticationService {
 
     private final AuthenticationMapper authenticationMapper;
 
-    @Autowired
     public AuthenticationService(
             UsuarioRolService usuarioRolService,
             PasswordEncoder passwordEncoder,
             TokenUtilComponent tokenUtilComponent,
             AuthenticationManager authenticationManager,
-            AuthenticationMapper authenticationMapper
-    ) {
+            AuthenticationMapper authenticationMapper) {
         this.usuarioRolService = usuarioRolService;
         this.passwordEncoder = passwordEncoder;
         this.tokenUtilComponent = tokenUtilComponent;
@@ -60,11 +57,10 @@ public class AuthenticationService {
         prefix = String.format("%s ", jwtPrefix);
     }
 
-    private Map<String,Object> buildClaims(String username, List<RolEnum> roles) {
+    private Map<String, Object> buildClaims(String username, List<RolEnum> roles) {
         return Map.ofEntries(
                 Map.entry("username", username),
-                Map.entry("roles", roles)
-        );
+                Map.entry("roles", roles));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -78,8 +74,7 @@ public class AuthenticationService {
     @Transactional(rollbackFor = Exception.class)
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
-          new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
         Usuario usuario = usuarioRolService.getUserByUsername(request.getUsername());
 
@@ -103,8 +98,8 @@ public class AuthenticationService {
                 .map(Rol::getRol)
                 .collect(Collectors.toList());
 
-       return RefreshTokenResponse.builder()
-               .token(tokenUtilComponent.generateToken(buildClaims(username, rolesEnum), username))
-               .build();
+        return RefreshTokenResponse.builder()
+                .token(tokenUtilComponent.generateToken(buildClaims(username, rolesEnum), username))
+                .build();
     }
 }

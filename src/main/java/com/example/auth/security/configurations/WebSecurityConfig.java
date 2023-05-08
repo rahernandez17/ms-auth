@@ -3,7 +3,6 @@ package com.example.auth.security.configurations;
 import com.example.auth.security.components.JwtAuthenticationAccessDenied;
 import com.example.auth.security.components.JwtAuthenticationEntryPoint;
 import com.example.auth.security.components.JwtAuthorizationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -51,7 +50,6 @@ public class WebSecurityConfig {
             "/actuator/**"
     };
 
-
     private final UserDetailsService userDetailsService;
 
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
@@ -60,7 +58,6 @@ public class WebSecurityConfig {
 
     private final JwtAuthenticationAccessDenied jwtAuthenticationAccessDenied;
 
-    @Autowired
     public WebSecurityConfig(
             UserDetailsService userDetailsService,
             JwtAuthorizationFilter jwtAuthorizationFilter,
@@ -73,14 +70,14 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public HttpFirewall getHttpFirewall() {
+    HttpFirewall getHttpFirewall() {
         StrictHttpFirewall strictHttpFirewall = new StrictHttpFirewall();
         strictHttpFirewall.setAllowUrlEncodedDoubleSlash(true);
         return strictHttpFirewall;
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
@@ -91,12 +88,12 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public InternalResourceViewResolver defaultViewResolver() {
+    InternalResourceViewResolver defaultViewResolver() {
         return new InternalResourceViewResolver();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .cors()
                 .and()
@@ -107,7 +104,7 @@ public class WebSecurityConfig {
                 .accessDeniedHandler(jwtAuthenticationAccessDenied)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/auth/register/**","/auth/login/**")
+                .antMatchers("/auth/register/**", "/auth/login/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
                 .permitAll()
@@ -125,12 +122,12 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -138,7 +135,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 }

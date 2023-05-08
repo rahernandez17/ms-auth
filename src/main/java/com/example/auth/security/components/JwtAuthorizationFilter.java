@@ -1,7 +1,6 @@
 package com.example.auth.security.components;
 
 import com.example.auth.security.models.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +33,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailService;
 
-    @Autowired
     public JwtAuthorizationFilter(
             TokenUtilComponent tokenUtilComponent,
             UserDetailsService userDetailService) {
@@ -51,8 +49,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader(jwtHeader);
         final String jwt;
         final String userUsername;
@@ -64,7 +61,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.replace(prefix, "");
 
-        if (tokenUtilComponent.isTokenExpired(jwt)) {
+        if (Boolean.TRUE.equals(tokenUtilComponent.isTokenExpired(jwt))) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -72,12 +69,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         userUsername = tokenUtilComponent.extractUsername(jwt);
         if (Objects.nonNull(userUsername) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             UserDetailsImpl userDetails = (UserDetailsImpl) userDetailService.loadUserByUsername(userUsername);
-            if (tokenUtilComponent.isTokenValid(jwt, userDetails.getUsername())) {
+            if (Boolean.TRUE.equals(tokenUtilComponent.isTokenValid(jwt, userDetails.getUsername()))) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
-                        userDetails.getAuthorities()
-                );
+                        userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

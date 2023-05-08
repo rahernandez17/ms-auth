@@ -4,7 +4,6 @@ import com.example.auth.exceptions.NotFoundException;
 import com.example.auth.models.Rol;
 import com.example.auth.models.RolEnum;
 import com.example.auth.repositories.RolRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +12,6 @@ public class RolService {
 
     private final RolRepository rolRepository;
 
-    @Autowired
     public RolService(RolRepository rolRepository) {
         this.rolRepository = rolRepository;
     }

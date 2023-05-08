@@ -5,7 +5,6 @@ import com.example.auth.models.RolEnum;
 import com.example.auth.models.Usuario;
 import com.example.auth.models.UsuarioRol;
 import com.example.auth.repositories.UsuarioRolRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +20,8 @@ public class UsuarioRolService {
 
     private final RolService rolService;
 
-    @Autowired
-    public UsuarioRolService(UsuarioRolRepository usuarioRolRepository, UsuarioService usuarioService, RolService rolService) {
+    public UsuarioRolService(UsuarioRolRepository usuarioRolRepository, UsuarioService usuarioService,
+            RolService rolService) {
         this.usuarioRolRepository = usuarioRolRepository;
         this.usuarioService = usuarioService;
         this.rolService = rolService;
