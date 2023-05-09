@@ -52,3 +52,9 @@ logbook:
   obfuscate:
     headers:
       -
+
+the_movie_db_api:
+  name: MovieClient
+  url: https://api.themoviedb.org/
+  token: eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjM5NTY1NzVhZDRmNWZlNWE1MmVhMzcyNjFlMjg1OCIsInN1YiI6IjY0NTk5ZWVmNzdkMjNiMDBmY2NiMWJiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1DhmCM89J4_STkihgy5pFlIYc-DA1y_exFxvgGluNbs
+  version: 3

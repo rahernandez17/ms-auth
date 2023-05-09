@@ -45,7 +45,8 @@ public class SwaggerConfig {
                 .securityContexts(Collections.singletonList(securityContext()))
                 .apiInfo(apiInfo()).tags(
                         new Tag("Authentication API", "Operations for Authentication"),
-                        new Tag("Users API", "Read operations for Users"));
+                        new Tag("Users API", "Read operations for Users"),
+                        new Tag("Movies API", "Read operations for Movies"));
     }
 
     private ApiInfo apiInfo() {
