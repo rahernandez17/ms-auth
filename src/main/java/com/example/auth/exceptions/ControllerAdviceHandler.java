@@ -30,4 +30,13 @@ public class ControllerAdviceHandler extends ResponseEntityExceptionHandler {
                 .path(request.getContextPath())
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(CustomFeignClientException.class)
+    public ResponseEntity<SimpleResponse<Object>> handleCustomFeignClientException(CustomFeignClientException ex, WebRequest request) {
+        return new ResponseEntity<>(SimpleResponse.builder()
+                .code(ex.getResponse().status())
+                .message(ex.getMessage())
+                .path(request.getContextPath())
+                .build(), HttpStatus.valueOf(ex.getResponse().status()));
+    }
 }

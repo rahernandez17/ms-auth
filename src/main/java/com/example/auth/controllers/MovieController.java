@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.auth.exceptions.CustomFeignClientException;
 import com.example.auth.requests.PopularMovieRequest;
 import com.example.auth.responses.MoviePageResponse;
 import com.example.auth.responses.SimpleResponse;
@@ -27,8 +29,9 @@ public class MovieController {
     }
 
     @ApiOperation(value = "Método para consultar las películas populares")
-    @PostMapping(value = "/popular", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<SimpleResponse<MoviePageResponse>> getPopularMovies(PopularMovieRequest request) {
+    @PostMapping(value = "/popular", produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<SimpleResponse<MoviePageResponse>> getPopularMovies(
+            @RequestBody PopularMovieRequest request) throws CustomFeignClientException {
         return new ResponseEntity<>(
                 SimpleResponse.<MoviePageResponse>builder()
                         .code(200)

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.auth.clients.MovieClient;
+import com.example.auth.exceptions.CustomFeignClientException;
 import com.example.auth.requests.PopularMovieRequest;
 import com.example.auth.responses.MoviePageResponse;
 
@@ -19,7 +20,7 @@ public class MovieService {
         this.movieClient = movieClient;
     }
 
-    public MoviePageResponse getPopularMovies(PopularMovieRequest request) {
+    public MoviePageResponse getPopularMovies(PopularMovieRequest request) throws CustomFeignClientException {
         return movieClient.getPopularMovies(
                 apiVersion,
                 request.getPage(),

@@ -33,7 +33,7 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket api() {
+    Docket api() {
         return new Docket(DocumentationType.OAS_30)
                 .forCodeGeneration(true)
                 .select()
@@ -61,7 +61,7 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public SecurityContext securityContext() {
+    SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .operationSelector(operationContext -> true)

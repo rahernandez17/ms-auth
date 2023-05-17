@@ -39,6 +39,9 @@ spring: # Flyway settings
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER # Compatible with Swagger spring fox 3
 
+feign:
+  httpclient:
+    disable-ssl-validation: true
 
 logging:
   level:
